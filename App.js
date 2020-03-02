@@ -8,7 +8,7 @@ export default function App() {
 
   const addGoalHandler = goalInput => {
     if (goalInput === "") {
-      Alert.alert("Warning", "You cannot add an empty goal!");
+      Alert.alert("Warning", "You cannot add an empty goal");
     } else {
       setCourseGoals([
         ...courseGoals,
