@@ -56,6 +56,8 @@ export default function App() {
             id={itemData.item.id}
             onDelete={deleteGoalHandler}
             text={itemData.item.value}
+            boxStyle={styles.boxStyle}
+            textStyle={styles.boxTextStyle}
           />
         )}
       />
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderBottomColor: "black",
     borderWidth: 1,
-    padding: 10,
+    padding: 20,
     width: "90%",
     fontSize: 20,
     borderRadius: 5
@@ -97,11 +99,22 @@ const styles = StyleSheet.create({
   modalStyle: {
     marginTop: 50
   },
-
   buttonsContainerStyle: {
     marginTop: 20,
     flexDirection: "row",
     width: "50%",
     justifyContent: "space-evenly"
+  },
+  boxStyle: {
+    backgroundColor: "#eee",
+    borderWidth: 1,
+    marginTop: 15,
+    padding: 8
+  },
+  boxTextStyle: {
+    marginLeft: 10,
+    color: "black",
+    fontSize: 20,
+    fontWeight: "500"
   }
 });
