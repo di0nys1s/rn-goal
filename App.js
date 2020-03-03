@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Alert, Text } from "react-native";
+import { StyleSheet, View, FlatList, Alert, Button } from "react-native";
 import Box from "./components/Box";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
+  const [isAddModal, setIsAddModal] = useState(false);
 
   const addGoalHandler = goalInput => {
     if (goalInput === "") {
@@ -15,6 +16,7 @@ export default function App() {
         ...prevGoals,
         { id: Math.random().toString(), value: goalInput }
       ]);
+      setIsAddModal(false);
     }
   };
 
@@ -31,12 +33,20 @@ export default function App() {
         textStyle={styles.textStyle}
         headerText="Welcome to Course Goals"
       />
+      <Button title="Add New Goal" onPress={() => setIsAddModal(true)} />
       <GoalInput
+        visible={isAddModal}
         inputContainerStyle={styles.inputContainer}
         textInputStyle={styles.textInput}
-        placeholder="Course Goal"
+        modalStyle={styles.modalStyle}
+        buttonsContainerStyle={styles.buttonsContainerStyle}
+        placeholder="Add Course Goal"
         title="ADD"
+        cancelButtonTitle="CANCEL"
         onAddGoal={addGoalHandler}
+        cancelModal={() => setIsAddModal(false)}
+        cancelButtonColor="red"
+        animationType="slide"
       />
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -58,16 +68,17 @@ const styles = StyleSheet.create({
     padding: 50
   },
   inputContainer: {
-    flexDirection: "row",
+    flex: 1,
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
   textInput: {
     borderBottomColor: "black",
     borderWidth: 1,
     padding: 10,
     width: "90%",
-    fontSize: 20
+    fontSize: 20,
+    borderRadius: 5
   },
   headerStyle: {
     textAlign: "center",
@@ -75,7 +86,6 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     alignItems: "center",
-    marginLeft: -30,
     marginTop: 10,
     marginBottom: 20
   },
@@ -83,5 +93,15 @@ const styles = StyleSheet.create({
     color: "green",
     fontSize: 20,
     fontWeight: "600"
+  },
+  modalStyle: {
+    marginTop: 50
+  },
+
+  buttonsContainerStyle: {
+    marginTop: 20,
+    flexDirection: "row",
+    width: "50%",
+    justifyContent: "space-evenly"
   }
 });

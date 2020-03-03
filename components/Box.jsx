@@ -5,7 +5,7 @@ const Box = props => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={props.onDelete.bind(this, props.id)}>
+      onPress={() => props.onDelete(props.id)}>
       <View style={styles.boxStyle}>
         <Text style={styles.textStyle}>{props.text}</Text>
       </View>
