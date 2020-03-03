@@ -9,15 +9,15 @@ const GoalInput = props => {
   };
 
   return (
-    <View style={props.inputContainerStyle}>
-      <TextInput
-        style={props.textInputStyle}
-        placeholder={props.placeholder}
-        onChangeText={changeInputHandler}
-        value={goal}
-      />
-      <Button title={props.title} onPress={() => props.onAddGoal(goal)} />
-    </View>
+      <View style={props.inputContainerStyle}>
+        <TextInput
+          style={props.textInputStyle}
+          placeholder={props.placeholder}
+          onChangeText={changeInputHandler}
+          value={goal}
+        />
+        <Button title={props.title} onPress={() => props.onAddGoal(goal)} />
+      </View>
   );
 };
 

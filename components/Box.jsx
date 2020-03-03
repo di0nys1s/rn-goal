@@ -1,11 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const Box = props => {
   return (
-    <View style={styles.boxStyle}>
-      <Text style={styles.textStyle}>{props.text}</Text>
-    </View>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={props.onDelete.bind(this, props.id)}>
+      <View style={styles.boxStyle}>
+        <Text style={styles.textStyle}>{props.text}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
