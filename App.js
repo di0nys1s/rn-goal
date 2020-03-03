@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Alert, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Alert,
+  Button,
+  ScrollView
+} from "react-native";
 import Box from "./components/Box";
 import GoalInput from "./components/GoalInput";
 import Header from "./components/Header";
@@ -7,6 +14,18 @@ import Header from "./components/Header";
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
   const [isAddModal, setIsAddModal] = useState(false);
+
+  const [listItem, setListItem] = useState([]);
+
+  const url = "https://jsonplaceholder.typicode.com/todos";
+
+  async function getTitle() {
+    const response = await fetch(url);
+    const data = await response.json();
+    setListItem(data.map(item => item.title));
+  }
+
+  getTitle();
 
   const addGoalHandler = goalInput => {
     if (goalInput === "") {
@@ -33,7 +52,7 @@ export default function App() {
         textStyle={styles.textStyle}
         headerText="Welcome to Course Goals"
       />
-      <Button title="Add New Goal" onPress={() => setIsAddModal(true)} />
+      <Button title="Add New Goals" onPress={() => setIsAddModal(true)} />
       <GoalInput
         visible={isAddModal}
         inputContainerStyle={styles.inputContainer}
@@ -48,19 +67,31 @@ export default function App() {
         cancelButtonColor="red"
         animationType="slide"
       />
-      <FlatList
-        keyExtractor={(item, index) => item.id}
-        data={courseGoals}
-        renderItem={itemData => (
-          <Box
-            id={itemData.item.id}
-            onDelete={deleteGoalHandler}
-            text={itemData.item.value}
-            boxStyle={styles.boxStyle}
-            textStyle={styles.boxTextStyle}
-          />
-        )}
-      />
+      <ScrollView>
+        <FlatList
+          keyExtractor={(item, index) => item.id}
+          data={courseGoals}
+          renderItem={itemData => (
+            <Box
+              id={itemData.item.id}
+              onDelete={deleteGoalHandler}
+              text={itemData.item.value}
+              boxStyle={styles.boxStyle}
+              textStyle={styles.boxTextStyle}
+            />
+          )}
+        />
+
+        {listItem
+          .map(list => (
+            <Box
+              boxStyle={styles.boxStyle}
+              textStyle={styles.boxTextStyle}
+              text={list}
+            />
+          ))
+          .slice(0, 10)}
+      </ScrollView>
     </View>
   );
 }
